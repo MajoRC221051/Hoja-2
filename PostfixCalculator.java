@@ -11,12 +11,16 @@ public class PostfixCalculator {
      * @return int
      */
     public int evaluate(String expression) {
-        String[] tokens = expression.split(" ");
+        while (!stack.isEmpty()) {  // Limpia la pila antes de cada evaluación
+            stack.pop();
+        }
+
+        String[] tokens = expression.trim().split("\\s+");
 
         for (String token : tokens) {
-            if (token.matches("\\d+")) { // Si es un número
+            if (token.matches("\\d+")) { 
                 stack.push(Integer.parseInt(token));
-            } else if (token.matches("[+\\-*/%]")) { // Si es un operador
+            } else if (token.matches("[+\\-*/%]")) { 
                 if (stack.size() < 2) {
                     throw new RuntimeException("Error: Operandos insuficientes.");
                 }
@@ -31,6 +35,7 @@ public class PostfixCalculator {
         if (stack.size() != 1) {
             throw new RuntimeException("Error: Expresión mal formada.");
         }
+
         return stack.pop();
     }
 
