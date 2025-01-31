@@ -5,13 +5,8 @@ public class PostfixCalculator {
         this.stack = stack;
     }
 
-    
-    /** 
-     * @param expression
-     * @return int
-     */
     public int evaluate(String expression) {
-        while (!stack.isEmpty()) {  // Limpia la pila antes de cada evaluación
+        while (!stack.isEmpty()) { 
             stack.pop();
         }
 
@@ -22,7 +17,7 @@ public class PostfixCalculator {
                 stack.push(Integer.parseInt(token));
             } else if (token.matches("[+\\-*/%]")) { 
                 if (stack.size() < 2) {
-                    throw new RuntimeException("Error: Operandos insuficientes.");
+                    throw new RuntimeException("Error: Expresión mal formada."); // Cambié el mensaje
                 }
                 int b = stack.pop();
                 int a = stack.pop();
@@ -32,7 +27,7 @@ public class PostfixCalculator {
             }
         }
 
-        if (stack.size() != 1) {
+        if (stack.size() != 1) { 
             throw new RuntimeException("Error: Expresión mal formada.");
         }
 
